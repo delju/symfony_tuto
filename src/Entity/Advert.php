@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AdvertRepository::class)
@@ -19,7 +20,11 @@ class Advert
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Length(min="10", minMessage="Le titre doit faire plus de 10 caractères")
      */
+
     private $title;
 
     /**
@@ -51,6 +56,11 @@ class Advert
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=category::class, inversedBy="adverts")
+     */
+    private $category;
 
     public function getId(): ?int
     {
@@ -137,6 +147,18 @@ class Advert
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCategory(): ?category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
