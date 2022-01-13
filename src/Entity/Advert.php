@@ -64,7 +64,7 @@ class Advert
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity=category::class, inversedBy="adverts")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="adverts")
      */
     private $category;
 
