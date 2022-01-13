@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class Comment
      * @ORM\Column(type="boolean")
      */
     private $disabled;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommentFlag::class, mappedBy="comment")
+     */
+    private $commentFlags;
+
+    public function __construct()
+    {
+        $this->commentFlags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +99,36 @@ class Comment
     public function setDisabled(bool $disabled): self
     {
         $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentFlag[]
+     */
+    public function getCommentFlags(): Collection
+    {
+        return $this->commentFlags;
+    }
+
+    public function addCommentFlag(CommentFlag $commentFlag): self
+    {
+        if (!$this->commentFlags->contains($commentFlag)) {
+            $this->commentFlags[] = $commentFlag;
+            $commentFlag->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentFlag(CommentFlag $commentFlag): self
+    {
+        if ($this->commentFlags->removeElement($commentFlag)) {
+            // set the owning side to null (unless already changed)
+            if ($commentFlag->getComment() === $this) {
+                $commentFlag->setComment(null);
+            }
+        }
 
         return $this;
     }
