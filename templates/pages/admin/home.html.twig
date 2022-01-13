@@ -69,8 +69,8 @@
                                     <tr>
                                         <th rowspan="1" colspan="1">{{ comment.author.email }}</th>
                                         <th rowspan="1" colspan="1">{{ comment.content | slice(0, 30) }}</th>
-                                        <th rowspan="1" colspan="1">{{ comment.flags | length }}</th>
-                                        <th rowspan="1" colspan="1">{{ (comment.flags | last).date | date("Y-m-d H:i:s")}}</th>
+                                        <th rowspan="1" colspan="1">{{ comment.commentFlags | length }}</th>
+                                        <th rowspan="1" colspan="1">{{ (comment.commentFlags | last).date | date("Y-m-d H:i:s")}}</th>
                                         <th rowspan="1" colspan="1"><a href="{{ path('adminReportedComment', {id: comment.id}) }}"><i class="fa fa-eye"></i></a></th>
                                     </tr>
                                 {% endfor %}

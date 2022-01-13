@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -32,22 +33,24 @@ class Comment
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $disabled;
+    private bool $disabled = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=CommentFlag::class, mappedBy="comment")
+     * @ORM\OneToMany(targetEntity=CommentFlag::class, mappedBy="comment", orphanRemoval=true, cascade={"ALL"})
      */
     private $commentFlags;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\Blameable(on="create")
      */
     private $author;
 

@@ -38,7 +38,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($comment);
-            $comment->getFlags()->forAll(fn($key, $flag) => $flag->setHandled(true));
+            $comment->getCommentFlags()->forAll(fn($key, $flag) => $flag->setHandled(true));
             $em->flush();
             return $this->redirectToRoute('adminHome');
         }

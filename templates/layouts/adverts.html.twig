@@ -60,6 +60,9 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mon compte</a>
                                 <div class="dropdown-menu">
+                                    {% if is_granted('ROLE_ADMIN') %}<a href="{{ url('adminHome') }}" class="dropdown-item">Administration</a>
+                                    <div class="dropdown-divider"></div>
+                                    {% endif %}
                                     <a href="{{ url('profile') }}" class="dropdown-item">Mon compte</a>
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ url('create_advert') }}" class="dropdown-item">Créer une annonce</a>

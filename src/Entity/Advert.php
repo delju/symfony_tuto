@@ -81,6 +81,8 @@ class Advert
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="adverts")
      * @ORM\JoinColumn(nullable=false)
+     * @Gedmo\Blameable(on="create")
+
      */
     private $user;
 
