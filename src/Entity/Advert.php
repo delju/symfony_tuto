@@ -6,6 +6,7 @@ use App\Repository\AdvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -36,11 +37,13 @@ class Advert
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     private $date;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="update")
      */
     private $lastUpdate;
 
@@ -56,6 +59,7 @@ class Advert
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"}, updatable= false)
      */
     private $slug;
 
@@ -73,6 +77,12 @@ class Advert
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="advert", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="adverts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -223,6 +233,18 @@ class Advert
                 $comment->setAdvert(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
