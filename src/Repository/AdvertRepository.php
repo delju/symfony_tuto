@@ -19,6 +19,23 @@ class AdvertRepository extends ServiceEntityRepository
         parent::__construct($registry, Advert::class);
     }
 
+    public function findById($id): Advert {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.id=:id')
+            ->setParameter('id', $id)
+        ;
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function findAllWithCategories() {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'c')
+            ->addSelect('c');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
     // /**
     //  * @return Advert[] Returns an array of Advert objects
     //  */
