@@ -6,6 +6,7 @@ use App\Entity\Photo;
 use App\Form\PhotoType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class PhotoUploader
 {
