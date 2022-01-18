@@ -7,13 +7,13 @@ namespace App\Search;
 class Search
 {
 
-    private string $keyword;
+    private ?string $keyword = null;
     private $categories;
 
     /**
      * @return string
      */
-    public function getKeyword(): string
+    public function getKeyword(): ?string
     {
         return $this->keyword;
     }
@@ -21,7 +21,7 @@ class Search
     /**
      * @param string $keyword
      */
-    public function setKeyword(string $keyword): void
+    public function setKeyword(?string $keyword): void
     {
         $this->keyword = $keyword;
     }

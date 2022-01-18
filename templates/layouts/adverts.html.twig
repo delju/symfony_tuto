@@ -78,7 +78,7 @@
                         <li class="search-option">
                             <button class="search tran3s dropdown-toggle" id="searchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search" aria-hidden="true"></i></button>
 {#                            <form action="#" class="p-color-bg dropdown-menu tran3s" aria-labelledby="searchDropdown">#}
-                                {% set searchForm = getSearchForm() %}
+                            {% set searchForm = getSearchForm() %}
                                 {{ form_start(searchForm, {attr: {class: 'p-color-bg dropdown-menu tran3s'}}) }}
                                 {{ form_widget(searchForm.keyword) }}
                                  <button class="p-color-bg"><i class="fa fa-search" aria-hidden="true"></i></button>

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Advert;
+use App\Search\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -64,4 +65,19 @@ class AdvertRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findBySearch(Search $search)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.title LIKE :keyword')
+            ->setParameter('keyword', '%'.$search->getKeyword().'%')
+        ;
+
+        if (count($search->getCategories())) {
+            $qb->andWhere('a.category in (:categories)')
+                ->setParameter('categories', $search->getCategories());
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
